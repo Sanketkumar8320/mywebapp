@@ -1,0 +1,66 @@
+name: Build and deploy ASP.NET Core to Azure - MyAspNetApp2603
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build --no-restore -c Release
+
+      - name: Publish project
+        run: dotnet publish --no-build -c Release -o ./published-app
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: published-app
+          path: ./published-app
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: published-app
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          tenant-id: '70e69cff-a832-47bf-b167-3b8040e45d63'        # Your Tenant ID (Updated)
+          subscription-id: '2c50fda7-1e15-43a6-a489-7dd76f8e4ad5'  # Your Subscription ID
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'MyAspNetApp2603'
+          slot-name: 'Production'
+          package: ./published-app

@@ -1,0 +1,7 @@
+C:\Users\asoda\MyAspNetApp\bin\Release\net8.0\publish\MyAspNetApp.exe
+C:\Users\asoda\MyAspNetApp\bin\Release\net8.0\publish\appsettings.Development.json
+C:\Users\asoda\MyAspNetApp\bin\Release\net8.0\publish\appsettings.json
+C:\Users\asoda\MyAspNetApp\bin\Release\net8.0\publish\MyAspNetApp.dll
+C:\Users\asoda\MyAspNetApp\bin\Release\net8.0\publish\MyAspNetApp.deps.json
+C:\Users\asoda\MyAspNetApp\bin\Release\net8.0\publish\MyAspNetApp.runtimeconfig.json
+C:\Users\asoda\MyAspNetApp\bin\Release\net8.0\publish\MyAspNetApp.pdb
